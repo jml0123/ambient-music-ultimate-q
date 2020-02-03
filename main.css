@@ -2,9 +2,16 @@
     box-sizing: border-box;
 }
 
+/*To be removed*/
+.wire-frame-reference {
+    margin: 250px auto;
+    text-align: center;
+}
+
+
 body {
     margin: 0 auto;
-    padding: 0;
+    padding: 50px;
     font-family: sans-serif;
 }
 header[role="heading"] {
@@ -18,12 +25,45 @@ header[role="heading"] {
     margin: 0;
 }
 
-
-
-.heading-container {
+.heading-container, .final-results-container {
     width: 88vw;
     max-width: 700px;
 }
+
+section[role="cover"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.66rem;
+    flex-direction: column;
+}
+
+.cover-container {
+    width: 88vw;
+    max-width: 700px;
+    text-align: end;
+    
+}
+
+.cover-text--wrapper, .cover-btn--wrapper {
+    text-align: right;
+}
+
+.cover-text {
+}
+
+.quiz-trigger p {
+    display: inline-block;
+    text-align: center;
+    background: black;
+    color: white;
+    height: 20px;
+    width: 80px;
+    border-radius: 90px;
+    cursor: pointer;
+}
+
+
 
 section[role="quiz-interface"] {
     display: flex;
@@ -44,7 +84,7 @@ section[role="quiz-interface"] {
     overflow: hidden;
 }
 
-.question-wrapper {
+.question--wrapper {
     display: block;
     flex-grow: 100;
     padding: 20px;
@@ -76,22 +116,32 @@ section[role="quiz-interface"] {
     text-align: right;
 }
 
-.user-report-wrapper {
-    padding: 12px 0px 0px 0px;
+.user-report--wrapper {
+    padding: 2.33em 0px 0px 0px;
     margin: 0 auto;
 }
-.user-score-wrapper, .user-answer-report {
+.user-score--wrapper, .user-answer-report--wrapper {
     position: absolute;
     margin: 1rem;
     bottom: 0;
 }
 
-.user-score-wrapper {
+.user-score--wrapper {
     right: 0;
 }
 
-.user-answer-report {
+.user-answer-report--wrapper {
     left: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.user-answer-report--wrapper img {
+    position: relative;
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    margin: 0 0.7em 0 0;
 }
 
 .user-report{
@@ -101,7 +151,7 @@ section[role="quiz-interface"] {
     font-weight: normal;
 }
 
-.answer-wrapper {
+.answer--wrapper {
     flex-grow: 100;
     flex-direction: column;
     display: flex;
@@ -111,7 +161,12 @@ section[role="quiz-interface"] {
 .choice {
     margin: 20px 0;
     justify-content: space-between;
+    padding: 0;
+    background: transparent;
 }
+
 .choice > label {
-    margin: 0 10px;
+    margin: 0 10px; 
 }
+
+
