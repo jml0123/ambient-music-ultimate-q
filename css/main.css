@@ -200,8 +200,8 @@ section[role="quiz-interface"] {
     margin: 0 0.7em 0 0;
 }
 .status-icon {
-    min-width: 1em;
-    min-height: 1em;
+    min-width: 1rem;
+    min-height: 1rem;
   
 }
 
