@@ -13,14 +13,16 @@ body {
     margin: 0 auto;
     padding: 50px;
     font-family: sans-serif;
-    background: #2D3E39
+    /*background: #2D3E39;*/
+    background: #fafafa;
+    transition: background-color ease-in 0.88s;
 }
 header[role="heading"] {
     text-align: right;
     padding: 1.66rem;
     display: flex;
     justify-content: center;
-    color: white;
+    color: black;
     font-family: "Allerta", sans-serif;
 }
 
@@ -32,6 +34,7 @@ header[role="heading"] {
 .heading-container, .final-results-container {
     width: 88vw;
     max-width: 700px;
+    transition: color ease-in 0.88s;
 }
 
 section[role="cover"] {
@@ -100,7 +103,7 @@ section[role="quiz-interface"] {
 
 
 .q-value {
-    background: black;
+    background: rgba(0, 0, 0, 0.93);
     border-radius: 0px 90px 90px 0px;
     padding: 8px 16px;
     width: 90%;
@@ -133,6 +136,8 @@ section[role="quiz-interface"] {
     width: 100%;
     max-width: 100%;
     object-fit: cover;
+    filter: blur(0.25px);
+    opacity: 0.88;
 }
 
 .user-status{
@@ -209,3 +214,9 @@ section[role="quiz-interface"] {
     background: red;
 }
 
+lottie-player {
+    position: relative;
+    max-height: 25px;
+    max-width: 25px;
+    background: transparent;
+}

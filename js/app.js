@@ -157,7 +157,7 @@ QUIZ_DATA = [
         choices: [
             {
                 text: 'Contemporary Classical',
-                key: true },
+                key: false },
             { 
                 text: 'Modal Jazz',
                 key: false },
@@ -166,7 +166,7 @@ QUIZ_DATA = [
                 key: false } ,
             { 
                 text: 'Glam Rock',
-                key: false },
+                key: true },
         ],
         reason: "The answer is this because"
     },
@@ -195,8 +195,87 @@ QUIZ_DATA = [
 CORRECT_ICON = "assets/icons/checkmark.png"
 INCORRECT_ICON = "assets/icons/xmark.png"
 
+
+
+
 let count = 0;
 let correct = 0;
+
+const getCoverScreen = (start, numCorrectAnswers) => {
+    const results = finalResult(numCorrectAnswers);
+    
+    const startTemp = 
+    $(`
+    <div class="cover-container">
+        <div class="cover-text--wrapper">
+            <div class="final-results-container">
+                <h1 class="main-header"></h1>
+            </div>
+            <p class="cover-text">This quiz has ${QUIZ_DATA.length} questions. </p>
+        </div>
+        <div class="cover-btn--wrapper">
+            <div class="quiz-trigger" onclick=startQuiz()><p>start</p></div>
+        </div>
+    </div>
+    `)
+    const endTemp = 
+    $(`
+    <div class="cover-container">
+        <div class="cover-text--wrapper">
+            <div class="final-results-container">
+                <h1 class="main-header">${numCorrectAnswers} out of ${QUIZ_DATA.length}.</h1>
+            </div>
+            <p class="cover-text">You answered ${results.percentScore}% of the quiz correctly.<br><br>${results.caption}</p>
+        </div>
+        <div class="cover-btn--wrapper">
+        <div class="quiz-trigger" onclick=startQuiz()><p>try again</p></div>
+        </div>
+    </div>
+    `)
+    return (start) ? startTemp : endTemp;
+}
+
+const renderCoverPage = (start, correct) => {
+    $("html body").css({backgroundColor:'#FAFAFA'})
+    $(".heading-container").css({color:'#000000'})
+    $(".final-results-container ").css({color:'#000000'})
+    $(".app-container").empty()
+    $(".cover-screen").append(getCoverScreen(start, correct).fadeIn("slow"));
+ 
+}
+
+const finalResult = (numCorrectAnswers) => {
+    
+    const calculatedScore = (numCorrectAnswers / QUIZ_DATA.length);
+
+    let results = {
+        percentScore: calculatedScore * 100,
+        caption: ""
+    };
+    if (calculatedScore == 1) {
+        results.caption = `
+            Wow -- Eno your stuff.<br>
+            You are truly an ambient music connoseuir.<br>
+            Is it even real music though?
+        `
+    }
+    else if (calculatedScore > 0.8 && calculatedScore < 1) {
+        results.caption = `
+            Well done!
+        `
+    }
+    else if (calculatedScore > 0.49 && calculatedScore <= 0.8 ) {
+        results.caption = `
+            Not bad!
+        `
+    }
+    else {
+        results.caption = `
+            Terrible.
+        `
+    }
+    return results;
+}
 
 
 const addListener = () => {
@@ -215,20 +294,23 @@ const addIcon = (src) => {
     }
 
 const getQuestion = (count) => {
-    return  `
+    return  $(`
     <div class="question--wrapper">
         <div class="question-img-container">
             <img src= "assets/img/${QUIZ_DATA[count].img}" class="question-img">
             <div class="mask"></div>
         </div>
+            <!--<lottie-player
+            src="https://assets5.lottiefiles.com/datafiles/uqakNon119TO2A2/data.json"  background="transparent"  speed="0.93"  style="width: 100%; height: 100%;"  loop  autoplay >
+            </lottie-player>-->
             <p class="user-status">Question ${count + 1} out of ${QUIZ_DATA.length}</p>
             <p class="q-value">${QUIZ_DATA[count].question}</p>
     </div>
-    `
+    `).hide()
 }
 
 const getAnswers = (count) => {
-    return  `
+    return  $(`
     <div class="answer--wrapper">
         <form class="answers">
             <div class="choice"><input type="radio" value=${QUIZ_DATA[count].choices[0].key} class="answer" id="val-1" name="option"><label for="val-1">${QUIZ_DATA[count].choices[0].text}</label></div>
@@ -244,15 +326,18 @@ const getAnswers = (count) => {
             <div class="user-score--wrapper"><h2 class="user-report tally">${correct}/${count} correct.</h2></div>
         </div>
     </div>
-    `
+    `).hide()
  
 }
 
 
 const renderQuestion = (count) => {
+    $("html body").css({backgroundColor:'#2D3E39'})
+    $(".heading-container").css({color:'#FFFFFF'})
+    $(".final-results-container ").css({color:'#FFFFFF'})
     $(".app-container")
-        .append(getQuestion(count))
-        .append(getAnswers(count));
+        .append(getQuestion(count).fadeIn(217))
+        .append(getAnswers(count).fadeIn(217));
     addListener()
 }
 
@@ -276,22 +361,45 @@ const processAnswer = (choice, parent, answered) => {
 
     count++
     $(".tally").text(`${correct}/${count} correct.`)
-    nextQuestion(count);
+    nextQuizState(count);
 
 }
 
-const nextQuestion = (count) => {
+const nextQuizState = (count) => {
+    $(".question-img").delay(3100).fadeOut(300);
+    $(".question--wrapper").delay(3150).fadeOut(250);
+    $(".answer--wrapper").delay(3150).fadeOut(250);
+    if (count < QUIZ_DATA.length) {
+        setTimeout(() => {
+            //alert(count)
+            $(".app-container").empty();
+            renderQuestion(count)
+        }, 3400);
+    }
+    else 
     setTimeout(() => {
-        alert(count)
-        $(".app-container").empty();
-        renderQuestion(count)
-    }, 2000);
+        //alert(count)
+        renderCoverPage(false, correct)   
+        }, 3400);
 }
 
+const startQuiz = () => {
+    $(".cover-screen").empty();
+    $(".app-container").empty();
+    count = 0;
+    correct = 0;
+    renderQuestion(count);
+}
+// render start screen
+// add event listener to cover page
+// render question when user clicks start
+// when QUIZ DATA IS USED, end screen
+// clear results and restart quiz
 
+// BONUS: Randomize questions upon restart
 
 const main = () => {
-    renderQuestion(count)
+    renderCoverPage(true)
 }
 
 main()
@@ -299,7 +407,6 @@ main()
 
 /*
 
-<section role="cover">
         <div class="cover-container">
             <div class="cover-text--wrapper">
                 <div class="final-results-container">
