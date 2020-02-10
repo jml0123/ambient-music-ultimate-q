@@ -76,7 +76,7 @@ QUIZ_DATA = [
         reason: "The answer is this because"
     },
     {
-        question: 'Under the moniker, GAS, ambient techno musician Wolfgang Voigt created a music style that avant-garde music magazine The Wire described as:',
+        question: 'Under the moniker, "GAS", Wolfgang Voigt created what music magazine, The Wire, described as:',
         img: 'gas.jpg',
         choices: [
             {
@@ -415,7 +415,7 @@ const nextQuizState = (count) => {
 const startQuiz = () => {
     $(".cover-screen").empty();
     $(".app-container").empty();
-    count = 0;
+    count = 4;
     correct = 0;
     renderQuestion(count);
 }
