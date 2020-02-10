@@ -16,7 +16,7 @@ QUIZ_DATA = [
                 text: '“furniture music”',
                 key: true },
         ],
-        reason: "The answer is this because"
+        reason: "A predescessor to ambient music, Erik Satie's 'furniture music' accentuated atmosphere and texture over traditional form and movement."
     },
     {
         question: 'What instrument was critical in the proliferation and development of ambient music?',
@@ -35,7 +35,7 @@ QUIZ_DATA = [
                 text: 'Roland TR-808',
                 key: false },
         ],
-        reason: "The answer is this because"
+        reason: "The continued development of the synthesizer, namely the FM synthesizer, was instrumental in the maturing of ambient music throughout the 1980s"
     },
     {
         question: 'Who coined the term, “ambient music” in the mid-1970’s and released the album “Ambient 1: Music for Airports” in 1978?',
@@ -54,7 +54,7 @@ QUIZ_DATA = [
                 text: 'David Bowie',
                 key: false },
         ],
-        reason: "The answer is this because"
+        reason: "The English producer Brian Eno is credited with coining the term 'ambient music' in the mid-1970s."
     },
     {
         question: 'Which 1990’s electronic artist was considered as a part of the “Ambient Techno” subgenre and a pioneer of “Intelligent Dance Music?',
@@ -73,10 +73,10 @@ QUIZ_DATA = [
                 text: 'Fatboy Slim',
                 key: false },
         ],
-        reason: "The answer is this because"
+        reason: "Aphex Twin is best known for his idiosyncratic work in electronic styles such as techno and ambient music in the 1990s."
     },
     {
-        question: 'Under the moniker, "GAS", Wolfgang Voigt created what music magazine, The Wire, described as:',
+        question: 'Under the moniker, "Gas", Wolfgang Voigt created what music magazine, The Wire, described as:',
         img: 'gas.jpg',
         choices: [
             {
@@ -92,10 +92,10 @@ QUIZ_DATA = [
                 text: '"an outdoor rave, heard floating through the air from a neighboring village"',
                 key: true },
         ],
-        reason: "The answer is this because"
+        reason: "The Wire described the characteristic GAS sound as 'an outdoor rave, heard floating through the air from a neighboring village'."
     },
     {
-        question: 'What 1960’s music style is considered to have played a part in paving the way for the rise of ambient music in the 1970’s-80’s?',
+        question: 'What music style is considered to have played a part in paving the way for the rise of ambient music?',
         img: 'midcentury.jpg',
         choices: [
             {
@@ -111,7 +111,7 @@ QUIZ_DATA = [
                 text: 'Minimal',
                 key: true },
         ],
-        reason: "The answer is this because"
+        reason: "Ambient music was heavily inspired by the ideas of minimalist composers including John Cage, Terry Riley and Erik Satie."
     },
     {
         question: 'Which is NOT usually a theme of ambient music?',
@@ -130,7 +130,7 @@ QUIZ_DATA = [
                 text: 'Use of synthesizers',
                 key: false },
         ],
-        reason: "The answer is this because"
+        reason: "Traditional ambient music has less defined percussive elements, so using snare drums are rare."
     },
     {
         question: 'Who was one of the first rock and pop artists to experiment with ambient music?',
@@ -149,7 +149,7 @@ QUIZ_DATA = [
                 text: 'Billie Eilish',
                 key: false },
         ],
-        reason: "The answer is this because"
+        reason: "David Bowie worked with Brian Eno and experimented with ambient music on his 1977 album, Low."
     },
     {
         question: 'What other genre of music did artist Brian Eno create in the early 1970’s, before pioneering modern “ambient music”?',
@@ -168,26 +168,26 @@ QUIZ_DATA = [
                 text: 'Glam Rock',
                 key: true },
         ],
-        reason: "The answer is this because"
+        reason: "Brian Eno's musical debut came in the form of Glam Rock."
     },
     {
         question: 'What might be a common benefit of listening to ambient music?',
         img: 'rothko.jpg',
         choices: [
             {
-                text: 'To pump you up before a tough workout',
-                key: false },
+                text: 'To provide background music to your daily walk',
+                key: true },
             { 
                 text: 'To help you focus and minimize distractions',
                 key: true },
             { 
-                text: 'To make you breakdance to ',
-                key: false } ,
+                text: 'To calm you down',
+                key: true } ,
             { 
-                text: 'To sing in the shower to',
-                key: false },
+                text: 'To ponder about your life in the shower',
+                key: true },
         ],
-        reason: "..."
+        reason: "You can listen to ambient music for anything."
     },
     
 ]
@@ -262,17 +262,21 @@ const finalResult = (numCorrectAnswers) => {
     }
     else if (calculatedScore > 0.8 && calculatedScore < 1) {
         results.caption = `
-            Well done!
-        `
+        Satiesfactory.<br>
+        You seem to know ambient music pretty well.<br>
+        Well done!
+    `
     }
     else if (calculatedScore > 0.49 && calculatedScore <= 0.8 ) {
         results.caption = `
-            Not bad!
+            Not bad!<br>
+            You did alright for guessing!<br>
         `
     }
     else {
         results.caption = `
-            Terrible.
+            It ain't for everyone!<br>
+            Can you even call this music?
         `
     }
     return results;
@@ -290,7 +294,7 @@ const addListener = () => {
     }
 
 const addIcon = (src) => {
-        imgTemp = `<img src=${src}>`
+        imgTemp = `<img src=${src} class="status-icon">`
         $(".user-answer-report--wrapper").append(imgTemp)
     }
 
