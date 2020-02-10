@@ -288,6 +288,7 @@ const addListener = () => {
             let choice =  $("input[name='option']:checked")
             let parent = $(choice).closest("span")
             let answered = parent.text()
+            answered = (answered.length > 32)? (answered.slice(0, 32) + " ..." + '"') : answered;
             alert(`clicked ${choice.val()}`);
             processAnswer(choice, parent, answered)
         });

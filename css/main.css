@@ -280,10 +280,7 @@ section[role="quiz-interface"] {
 }
 /* On mouse-over, add a grey background color */
 
-.choice:hover .custom-button {
-    background-color: #0969A2;
-    filter:drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.08))
-}
+
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
 .custom-button:after {
@@ -355,12 +352,13 @@ lottie-player {
     }
     
     .question--wrapper {
-        font-size: 22px;
+        font-size: 19px;
         color: white;
-        min-height: 20vh;
-        max-height: 20vh;
+        min-height: 22.5vh;
+        max-height: 22.5vh;
     }
     .q-value {
+        font-size: 19px;
         margin: 7.5vh 0;
         padding: 13px 8px;
         width: 100%;
@@ -387,7 +385,7 @@ lottie-player {
 
     }
     .container {
-        font-size: 17px;
+        font-size: 14.33px;
     }
     .choice {
         margin: 39px 0px 39px 42px;
@@ -404,4 +402,8 @@ lottie-player {
     .custom-button:hover ~ .choice-text{
         background-color: #0969A2
     }  
+    .choice:hover .custom-button {
+        background-color: #0969A2;
+        filter:drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.08))
+    }
 }
