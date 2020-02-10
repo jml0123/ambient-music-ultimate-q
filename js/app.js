@@ -420,7 +420,7 @@ const nextQuizState = (count) => {
 const startQuiz = () => {
     $(".cover-screen").empty();
     $(".app-container").empty();
-    count = 4;
+    count = 0;
     correct = 0;
     renderQuestion(count);
 }
