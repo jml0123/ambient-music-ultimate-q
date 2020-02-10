@@ -287,9 +287,12 @@ const addListener = () => {
         $("input[type='radio']").on("click", (e) => {
             let choice =  $("input[name='option']:checked")
             let parent = $(choice).closest("span")
-            let answered = parent.text()
-            answered = (answered.length > 32)? (answered.slice(0, 32) + " ..." + '"') : answered;
-            alert(`clicked ${choice.val()}`);
+            let answered = parent.text();
+            if (parent.text() > 32) {
+                answered = (`'${parent.text().slice(0, 32)}...'`)
+            }
+        
+            //alert(`clicked ${choice.val()}`);
             processAnswer(choice, parent, answered)
         });
     }
