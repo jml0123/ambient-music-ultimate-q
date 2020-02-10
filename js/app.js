@@ -211,7 +211,8 @@ const getCoverScreen = (start, numCorrectAnswers) => {
             <div class="final-results-container">
                 <h1 class="main-header"></h1>
             </div>
-            <p class="cover-text">This quiz has ${QUIZ_DATA.length} questions. </p>
+            <p class="cover-text">Think you know about the eccentric<br> genre known as ambient music? <br><br>
+            Take this  ${QUIZ_DATA.length} question quiz to find out. </p>
         </div>
         <div class="cover-btn--wrapper">
             <div class="quiz-trigger" onclick=startQuiz()><p>start</p></div>
@@ -281,7 +282,7 @@ const finalResult = (numCorrectAnswers) => {
 const addListener = () => {
         $("input[type='radio']").on("click", (e) => {
             let choice =  $("input[name='option']:checked")
-            let parent = $(choice).closest("div")
+            let parent = $(choice).closest("span")
             let answered = parent.text()
             alert(`clicked ${choice.val()}`);
             processAnswer(choice, parent, answered)
@@ -313,10 +314,38 @@ const getAnswers = (count) => {
     return  $(`
     <div class="answer--wrapper">
         <form class="answers">
-            <div class="choice"><input type="radio" value=${QUIZ_DATA[count].choices[0].key} class="answer" id="val-1" name="option"><label for="val-1">${QUIZ_DATA[count].choices[0].text}</label></div>
-            <div class="choice"><input type="radio" value=${QUIZ_DATA[count].choices[1].key}  class="answer" id="val-2" name="option"><label for="val-2">${QUIZ_DATA[count].choices[1].text}</label></div>
-            <div class="choice"><input type="radio" value=${QUIZ_DATA[count].choices[2].key}  class="answer" id="val-3" name="option"><label for="val-3">${QUIZ_DATA[count].choices[2].text}</label></div>
-            <div class="choice"><input type="radio" value=${QUIZ_DATA[count].choices[3].key} class="answer" id="val-4" name="option"><label for="val-4">${QUIZ_DATA[count].choices[3].text}</label></div>
+            <div class="choice">
+                <label for="val-1" class="container">
+                    <span class="choice-text">${QUIZ_DATA[count].choices[0].text}
+                        <input type="radio" value=${QUIZ_DATA[count].choices[0].key} class="answer" id="val-1" name="option">
+                    </span>
+                    <span class="custom-button">A</span>
+                </label>
+            </div>
+            <div class="choice">
+                <label for="val-2" class="container">
+                    <span class="choice-text">${QUIZ_DATA[count].choices[1].text}
+                        <input type="radio" value=${QUIZ_DATA[count].choices[1].key}  class="answer" id="val-2" name="option">
+                    </span>
+                    <span class="custom-button">B</span>
+                </label>
+            </div>
+            <div class="choice">
+                <label for="val-3" class="container">
+                    <span class="choice-text">${QUIZ_DATA[count].choices[2].text}
+                            <input type="radio" value=${QUIZ_DATA[count].choices[2].key}  class="answer" id="val-3" name="option">
+                    </span>
+                    <span class="custom-button">C</span>
+                </label>
+            </div>
+            <div class="choice">
+                <label for="val-4" class="container">
+                    <span class="choice-text">${QUIZ_DATA[count].choices[3].text}
+                        <input type="radio" value=${QUIZ_DATA[count].choices[3].key} class="answer" id="val-4" name="option">
+                    </span>
+                    <span class="custom-button">D</span>
+                </label>
+            </div>
         </form>
         <div class="user-report--wrapper">
             <div class="user-answer-report">
@@ -352,7 +381,7 @@ const processAnswer = (choice, parent, answered) => {
         addIcon(INCORRECT_ICON)
         parent.addClass("highlight-incorrect")
         // Mark the correct answer
-        $("input[value='true']").closest("div").addClass("highlight-correct")
+        $("input[value='true']").closest("span").addClass("highlight-correct")
     }
 
     answerTemp = `<h2 class="user-report">You answered: ${answered}</h2>`
