@@ -60,7 +60,7 @@ QUIZ_DATA = [
         reason: "The English producer Brian Eno is credited with coining the term 'ambient music' in the mid-1970s."
     },
     {
-        question: 'Which 1990’s electronic artist was considered as a part of the “Ambient Techno” subgenre and a pioneer of “Intelligent Dance Music?',
+        question: 'Which 1990s electronic artist was considered as a part of the “Ambient Techno” subgenre and a pioneer of “Intelligent Dance Music?',
         img: 'afx.jpg',
         alt: 'AFX',
         choices: [

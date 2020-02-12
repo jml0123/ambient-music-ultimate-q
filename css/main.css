@@ -331,9 +331,10 @@ lottie-player {
         width: 100vw;
         margin: 0;
         max-height: 100vh;
+        height: auto;
     }
     .cover-container {
-        margin: 12vh 0;
+        margin: 12vh 0 0 0;
     }
     section[role="cover"] {
         padding: 2vh 2vh 0px;
