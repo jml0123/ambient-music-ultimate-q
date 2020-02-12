@@ -315,6 +315,7 @@ lottie-player {
 @media only screen and (max-width: 600px) {
     html, body {
         overflow: hidden;
+        max-height: 100vh;
       }
     body {
         padding: 0px;

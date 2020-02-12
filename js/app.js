@@ -390,6 +390,8 @@ const addListener = () => {
 
 // When event is triggered, callback to assign values
 const assignValues = () => {
+    // remove event handlers to disable multiclick 
+    $('label, input[type="radio"]').off();
     let choice =  $("input[type='radio']:focus")
     let label = $(choice).siblings("label")
     let answered = label.children(".choice-text").text();
@@ -449,7 +451,6 @@ const renderQuestion = (count) => {
 
 // Move to next quiz state after user answers question
 const nextQuizState = (count) => {
-    $("input[type='radio']").unbind();
     $(".app-container").delay(4200).fadeOut(300);
     if (count < QUIZ_DATA.length) {
         setTimeout(() => {
