@@ -2,6 +2,7 @@ QUIZ_DATA = [
     {
         question: 'What term did pioneering 20th-century French composer Erik Satie give to music which “will be part of the noises of the environment?”',
         img: 'satie.jpg',
+        alt: 'Erik Satie',
         choices: [
             {
                 text: '“syndicated music”',
@@ -21,6 +22,7 @@ QUIZ_DATA = [
     {
         question: 'What instrument was critical in the proliferation and development of ambient music?',
         img: 'studio.jpg',
+        alt: 'Studio',
         choices: [
             {
                 text: 'FM Synthesizer',
@@ -40,6 +42,7 @@ QUIZ_DATA = [
     {
         question: 'Who coined the term, “ambient music” in the mid-1970’s and released the album “Ambient 1: Music for Airports” in 1978?',
         img: 'airports.jpg',
+        alt: 'Music For Airports',
         choices: [
             {
                 text: 'Prince',
@@ -59,6 +62,7 @@ QUIZ_DATA = [
     {
         question: 'Which 1990’s electronic artist was considered as a part of the “Ambient Techno” subgenre and a pioneer of “Intelligent Dance Music?',
         img: 'afx.jpg',
+        alt: 'AFX',
         choices: [
             {
                 text: 'Aphex Twin',
@@ -76,8 +80,9 @@ QUIZ_DATA = [
         reason: "Aphex Twin is best known for his idiosyncratic work in electronic styles such as techno and ambient music in the 1990s."
     },
     {
-        question: 'Under the moniker, "Gas", Wolfgang Voigt created what music magazine, The Wire, described as:',
+        question: 'Under the moniker, "GAS", Wolfgang Voigt created what music magazine, The Wire, described as:',
         img: 'gas.jpg',
+        alt: 'Wolfang Voigt',
         choices: [
             {
                 text: '“a plastic bag, floating through the air in the middle of a dense and crowded city”',
@@ -97,6 +102,7 @@ QUIZ_DATA = [
     {
         question: 'What music style is considered to have played a part in paving the way for the rise of ambient music?',
         img: 'midcentury.jpg',
+        alt: 'Mid-century Furniture',
         choices: [
             {
                 text: 'Motown',
@@ -116,6 +122,7 @@ QUIZ_DATA = [
     {
         question: 'Which is NOT usually a theme of ambient music?',
         img: 'loop.jpg',
+        alt: 'Liner Notes',
         choices: [
             {
                 text: 'Use of loops',
@@ -135,6 +142,7 @@ QUIZ_DATA = [
     {
         question: 'Who was one of the first rock and pop artists to experiment with ambient music?',
         img: 'posters.jpg',
+        alt: 'Vintage Band Posters',
         choices: [
             {
                 text: 'David Bowie',
@@ -154,6 +162,7 @@ QUIZ_DATA = [
     {
         question: 'What other genre of music did artist Brian Eno create in the early 1970’s, before pioneering modern “ambient music”?',
         img: 'mixing.jpg',
+        alt: 'Mixing Desk',
         choices: [
             {
                 text: 'Contemporary Classical',
@@ -173,6 +182,7 @@ QUIZ_DATA = [
     {
         question: 'What might be a common benefit of listening to ambient music?',
         img: 'rothko.jpg',
+        alt: 'Modern Art',
         choices: [
             {
                 text: 'To provide background music to your daily walk',
@@ -201,9 +211,10 @@ INCORRECT_ICON = "assets/icons/xmark.png"
 let count = 0;
 let correct = 0;
 
+// Returns a cover screen (start screen end screen) based on quiz state and user choices
 const getCoverScreen = (start, numCorrectAnswers) => {
     const results = finalResult(numCorrectAnswers);
-    
+
     const startTemp = 
     $(`
     <div class="cover-container">
@@ -219,6 +230,7 @@ const getCoverScreen = (start, numCorrectAnswers) => {
         </div>
     </div>
     `)
+
     const endTemp = 
     $(`
     <div class="cover-container">
@@ -229,14 +241,25 @@ const getCoverScreen = (start, numCorrectAnswers) => {
             <p class="cover-text">You answered ${results.percentScore}% of the quiz correctly.<br><br>${results.caption}</p>
         </div>
         <div class="cover-btn--wrapper">
-        <div class="quiz-trigger" onkeypress=startQuiz()><p tabindex="0">try again</p></div>
+        <div class="quiz-trigger" onkeypress=startQuiz() onclick=startQuiz()><p tabindex="0">try again</p></div>
         </div>
     </div>
     `)
+
     return (start) ? startTemp : endTemp;
 }
 
+// Render Cover Page
+const renderCoverPage = (start, correct) => {
+    $("html body").css({backgroundColor:'#FAFAFA'})
+    $(".heading-container").css({color:'#000000'})
+    $(".final-results-container ").css({color:'#000000'})
+    $(".app-container").empty()
+    $(".cover-screen").append(getCoverScreen(start, correct).fadeIn("slow"));
+ 
+}
 
+// Parses final result and comments based on number of correct answers
 const finalResult = (numCorrectAnswers) => {
     
     const calculatedScore = (numCorrectAnswers / QUIZ_DATA.length);
@@ -274,11 +297,15 @@ const finalResult = (numCorrectAnswers) => {
     return results;
 }
 
+
+
+
+// Retrieves question from QUIZ_DATA and current quiz state (count), then return an html template
 const getQuestion = (count) => {
     return  `
     <div class="question--wrapper">
         <div class="question-img-container">
-            <img src= "assets/img/${QUIZ_DATA[count].img}" class="question-img">
+            <img src= "assets/img/${QUIZ_DATA[count].img}" class="question-img" alt=${QUIZ_DATA[count].alt}>
             <div class="mask"></div>
         </div>
             <!--<lottie-player
@@ -290,6 +317,7 @@ const getQuestion = (count) => {
     `
 }
 
+// Retrieves choices from QUIZ_DATA and current quiz state (count), then return an html template
 const getAnswers = (count) => {
     return  `
     <div class="answer--wrapper">
@@ -339,30 +367,28 @@ const getAnswers = (count) => {
 }
 
 
-
+// Add event listener to radio buttons (keyboard / mouse click friendly)
 const addListener = () => {
     let clickedByMouse = false;
     $("input[type='radio']").on("keypress", (e) => {
         if (e.keyCode == 32) assignValues()
     })
-
     $('label, input[type="radio"]').mouseup(function(e) {
         $(this).focus();
         assignValues()
     });
-
     $('input[type="radio"]').click(function() {
         if(clickedByMouse){
             console.log("mouse");
-            //Reset flag
             clickedByMouse = false;
         }else{
             console.log("keyboard");
         }
     });
-
 };
 
+
+// When event is triggered, callback to assign values
 const assignValues = () => {
     let choice =  $("input[type='radio']:focus")
     let label = $(choice).siblings("label")
@@ -373,7 +399,10 @@ const assignValues = () => {
     processAnswer(choice, label, answered)
 }
 
+
+// Process user's answer
 const processAnswer = (choice, label, answered) => {
+    
     // If answer is correct
     if (choice.val() == "true") {
         addIcon(CORRECT_ICON)
@@ -387,24 +416,16 @@ const processAnswer = (choice, label, answered) => {
         // Mark the correct answer
         $("input[value='true']").siblings("label").children(".choice-text").addClass("highlight-correct")
     }
-
+    
+    // Show what user answered
     answerTemp = `<h2 class="user-report">You answered: ${answered}</h2>`
     $(".user-answer-report--wrapper").append(answerTemp)
     $(".q-value").text(QUIZ_DATA[count].reason)
 
+    // Move to next question
     count++
     $(".tally").text(`${correct}/${count} correct.`)
     nextQuizState(count);
-
-}
-
-const renderCoverPage = (start, correct) => {
-    $("html body").css({backgroundColor:'#FAFAFA'})
-    $(".heading-container").css({color:'#000000'})
-    $(".final-results-container ").css({color:'#000000'})
-    $(".app-container").empty()
-    $(".cover-screen").append(getCoverScreen(start, correct).fadeIn("slow"));
- 
 }
 
 
@@ -413,6 +434,7 @@ const addIcon = (src) => {
     $(".user-answer-report--wrapper").append(imgTemp)
 }
 
+// Render question on screen
 const renderQuestion = (count) => {
     $("html body").css({backgroundColor:'#2D3E39'})
     $(".heading-container").css({color:'#FFFFFF'})
@@ -425,13 +447,10 @@ const renderQuestion = (count) => {
     addListener()
 }
 
-
-
+// Move to next quiz state after user answers question
 const nextQuizState = (count) => {
     $("input[type='radio']").unbind();
     $(".app-container").delay(4200).fadeOut(300);
-    //$(".question--wrapper").delay(4200).fadeOut(300);
-    //$(".answer--wrapper").delay(4200).fadeOut(300);
     if (count < QUIZ_DATA.length) {
         setTimeout(() => {
             //alert(count)
@@ -446,6 +465,7 @@ const nextQuizState = (count) => {
         }, 4500);
 }
 
+// Initialize quiz 
 const startQuiz = () => {
     $(".cover-screen").empty();
     $(".app-container").empty();
@@ -454,8 +474,6 @@ const startQuiz = () => {
     renderQuestion(count);
 }
 
-// BONUS: Randomize questions upon restart
-
 const main = () => {
     renderCoverPage(true)
 }
@@ -463,3 +481,5 @@ const main = () => {
 main()
 
 
+
+// BONUS: Randomize questions upon restart
