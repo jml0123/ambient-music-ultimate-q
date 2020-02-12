@@ -395,8 +395,8 @@ const assignValues = () => {
     let choice =  $("input[type='radio']:focus")
     let label = $(choice).siblings("label")
     let answered = label.children(".choice-text").text();
-    if (answered > 32) {    
-        answered = (`'${label.text().slice(0, 32)}...'`)
+    if (answered.length > 32) {    
+        answered = (`${answered.slice(0,32)}...'`)
     }
     processAnswer(choice, label, answered)
 }
@@ -470,7 +470,7 @@ const nextQuizState = (count) => {
 const startQuiz = () => {
     $(".cover-screen").empty();
     $(".app-container").empty();
-    count = 0;
+    count = 4;
     correct = 0;
     renderQuestion(count);
 }
