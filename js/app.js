@@ -35,7 +35,7 @@ QUIZ_DATA = [
                 text: 'Roland TR-808',
                 key: false },
         ],
-        reason: "The continued development of the synthesizer, namely the FM synthesizer, was instrumental in the maturing of ambient music throughout the 1980s"
+        reason: "The continued development of the synthesizer, namely the FM synthesizer, was instrumental in the maturing of ambient music throughout the 1980s."
     },
     {
         question: 'Who coined the term, “ambient music” in the mid-1970’s and released the album “Ambient 1: Music for Airports” in 1978?',
@@ -215,7 +215,7 @@ const getCoverScreen = (start, numCorrectAnswers) => {
             Take this  ${QUIZ_DATA.length} question quiz to find out. </p>
         </div>
         <div class="cover-btn--wrapper">
-            <div class="quiz-trigger" onclick=startQuiz()><p>start</p></div>
+            <div class="quiz-trigger" onkeypress=startQuiz() onclick=startQuiz()><p tabindex="0">start</p></div>
         </div>
     </div>
     `)
@@ -229,21 +229,13 @@ const getCoverScreen = (start, numCorrectAnswers) => {
             <p class="cover-text">You answered ${results.percentScore}% of the quiz correctly.<br><br>${results.caption}</p>
         </div>
         <div class="cover-btn--wrapper">
-        <div class="quiz-trigger" onclick=startQuiz()><p>try again</p></div>
+        <div class="quiz-trigger" onkeypress=startQuiz()><p tabindex="0">try again</p></div>
         </div>
     </div>
     `)
     return (start) ? startTemp : endTemp;
 }
 
-const renderCoverPage = (start, correct) => {
-    $("html body").css({backgroundColor:'#FAFAFA'})
-    $(".heading-container").css({color:'#000000'})
-    $(".final-results-container ").css({color:'#000000'})
-    $(".app-container").empty()
-    $(".cover-screen").append(getCoverScreen(start, correct).fadeIn("slow"));
- 
-}
 
 const finalResult = (numCorrectAnswers) => {
     
@@ -282,28 +274,8 @@ const finalResult = (numCorrectAnswers) => {
     return results;
 }
 
-
-const addListener = () => {
-        $("input[type='radio']").on("click", (e) => {
-            let choice =  $("input[name='option']:checked")
-            let parent = $(choice).closest("span")
-            let answered = parent.text();
-            if (parent.text() > 32) {
-                answered = (`'${parent.text().slice(0, 32)}...'`)
-            }
-        
-            //alert(`clicked ${choice.val()}`);
-            processAnswer(choice, parent, answered)
-        });
-    }
-
-const addIcon = (src) => {
-        imgTemp = `<img src=${src} class="status-icon">`
-        $(".user-answer-report--wrapper").append(imgTemp)
-    }
-
 const getQuestion = (count) => {
-    return  $(`
+    return  `
     <div class="question--wrapper">
         <div class="question-img-container">
             <img src= "assets/img/${QUIZ_DATA[count].img}" class="question-img">
@@ -315,42 +287,41 @@ const getQuestion = (count) => {
             <p class="user-status">Question ${count + 1} out of ${QUIZ_DATA.length}</p>
             <p class="q-value">${QUIZ_DATA[count].question}</p>
     </div>
-    `).hide()
+    `
 }
 
 const getAnswers = (count) => {
-    return  $(`
+    return  `
     <div class="answer--wrapper">
         <form class="answers">
             <div class="choice">
-                <label for="val-1" class="container">
+                <input type="radio" value=${QUIZ_DATA[count].choices[0].key} class="answer" id="val-1" name="option">
+                <label for="val-1" class="answer-container">
                     <span class="choice-text">${QUIZ_DATA[count].choices[0].text}
-                        <input type="radio" value=${QUIZ_DATA[count].choices[0].key} class="answer" id="val-1" name="option">
                     </span>
                     <span class="custom-button">A</span>
                 </label>
             </div>
             <div class="choice">
-                <label for="val-2" class="container">
+                <input type="radio" value=${QUIZ_DATA[count].choices[1].key}  class="answer" id="val-2" name="option">
+                <label for="val-2" class="answer-container">
                     <span class="choice-text">${QUIZ_DATA[count].choices[1].text}
-                        <input type="radio" value=${QUIZ_DATA[count].choices[1].key}  class="answer" id="val-2" name="option">
                     </span>
                     <span class="custom-button">B</span>
                 </label>
             </div>
             <div class="choice">
-                <label for="val-3" class="container">
+                <input type="radio" value=${QUIZ_DATA[count].choices[2].key}  class="answer" id="val-3" name="option">
+                <label for="val-3" class="answer-container">
                     <span class="choice-text">${QUIZ_DATA[count].choices[2].text}
-                            <input type="radio" value=${QUIZ_DATA[count].choices[2].key}  class="answer" id="val-3" name="option">
                     </span>
                     <span class="custom-button">C</span>
                 </label>
             </div>
             <div class="choice">
-                <label for="val-4" class="container">
-                    <span class="choice-text">${QUIZ_DATA[count].choices[3].text}
-                        <input type="radio" value=${QUIZ_DATA[count].choices[3].key} class="answer" id="val-4" name="option">
-                    </span>
+                <input type="radio" value=${QUIZ_DATA[count].choices[3].key} class="answer" id="val-4" name="option" chec>
+                <label for="val-4" class="answer-container">
+                    <span class="choice-text">${QUIZ_DATA[count].choices[3].text}</span>
                     <span class="custom-button">D</span>
                 </label>
             </div>
@@ -363,33 +334,58 @@ const getAnswers = (count) => {
             <div class="user-score--wrapper"><h2 class="user-report tally">${correct}/${count} correct.</h2></div>
         </div>
     </div>
-    `).hide()
+    `
  
 }
 
 
-const renderQuestion = (count) => {
-    $("html body").css({backgroundColor:'#2D3E39'})
-    $(".heading-container").css({color:'#FFFFFF'})
-    $(".final-results-container ").css({color:'#FFFFFF'})
-    $(".app-container")
-        .append(getQuestion(count).fadeIn(217))
-        .append(getAnswers(count).fadeIn(217));
-    addListener()
+
+const addListener = () => {
+    let clickedByMouse = false;
+    $("input[type='radio']").on("keypress", (e) => {
+        if (e.keyCode == 32) assignValues()
+    })
+
+    $('label, input[type="radio"]').mouseup(function(e) {
+        $(this).focus();
+        assignValues()
+    });
+
+    $('input[type="radio"]').click(function() {
+        if(clickedByMouse){
+            console.log("mouse");
+            //Reset flag
+            clickedByMouse = false;
+        }else{
+            console.log("keyboard");
+        }
+    });
+
+};
+
+const assignValues = () => {
+    let choice =  $("input[type='radio']:focus")
+    let label = $(choice).siblings("label")
+    let answered = label.children(".choice-text").text();
+    if (answered > 32) {    
+        answered = (`'${label.text().slice(0, 32)}...'`)
+    }
+    processAnswer(choice, label, answered)
 }
 
-const processAnswer = (choice, parent, answered) => {
-
+const processAnswer = (choice, label, answered) => {
+    // If answer is correct
     if (choice.val() == "true") {
         addIcon(CORRECT_ICON)
-        parent.addClass("highlight-correct")
+        label.children(".choice-text").addClass("highlight-correct")
         correct++
     }
+    // If answer is incorrect
     else {
         addIcon(INCORRECT_ICON)
-        parent.addClass("highlight-incorrect")
+        label.children(".choice-text").addClass("highlight-incorrect")
         // Mark the correct answer
-        $("input[value='true']").closest("span").addClass("highlight-correct")
+        $("input[value='true']").siblings("label").children(".choice-text").addClass("highlight-correct")
     }
 
     answerTemp = `<h2 class="user-report">You answered: ${answered}</h2>`
@@ -402,22 +398,52 @@ const processAnswer = (choice, parent, answered) => {
 
 }
 
+const renderCoverPage = (start, correct) => {
+    $("html body").css({backgroundColor:'#FAFAFA'})
+    $(".heading-container").css({color:'#000000'})
+    $(".final-results-container ").css({color:'#000000'})
+    $(".app-container").empty()
+    $(".cover-screen").append(getCoverScreen(start, correct).fadeIn("slow"));
+ 
+}
+
+
+const addIcon = (src) => {
+    imgTemp = `<img src=${src} class="status-icon">`
+    $(".user-answer-report--wrapper").append(imgTemp)
+}
+
+const renderQuestion = (count) => {
+    $("html body").css({backgroundColor:'#2D3E39'})
+    $(".heading-container").css({color:'#FFFFFF'})
+    $(".final-results-container ").css({color:'#FFFFFF'})
+    $(".app-container")
+        .hide()
+        .append(getQuestion(count))
+        .append(getAnswers(count))
+        .fadeIn(217);
+    addListener()
+}
+
+
+
 const nextQuizState = (count) => {
-    $(".question-img").delay(3100).fadeOut(300);
-    $(".question--wrapper").delay(3150).fadeOut(250);
-    $(".answer--wrapper").delay(3150).fadeOut(250);
+    $("input[type='radio']").unbind();
+    $(".app-container").delay(4200).fadeOut(300);
+    //$(".question--wrapper").delay(4200).fadeOut(300);
+    //$(".answer--wrapper").delay(4200).fadeOut(300);
     if (count < QUIZ_DATA.length) {
         setTimeout(() => {
             //alert(count)
             $(".app-container").empty();
             renderQuestion(count)
-        }, 3400);
+        }, 4500);
     }
     else 
     setTimeout(() => {
         //alert(count)
         renderCoverPage(false, correct)   
-        }, 3400);
+        }, 4500);
 }
 
 const startQuiz = () => {
@@ -427,11 +453,6 @@ const startQuiz = () => {
     correct = 0;
     renderQuestion(count);
 }
-// render start screen
-// add event listener to cover page
-// render question when user clicks start
-// when QUIZ DATA IS USED, end screen
-// clear results and restart quiz
 
 // BONUS: Randomize questions upon restart
 
@@ -441,21 +462,4 @@ const main = () => {
 
 main()
 
-
-/*
-
-        <div class="cover-container">
-            <div class="cover-text--wrapper">
-                <div class="final-results-container">
-                    <h1 class="main-header">10 out of 10.</h1>
-                </div>
-                <p class="cover-text">Think you know about the eccentric genre known as ambient music? <br><br>
-                    Take this quiz to find out.</p>
-            </div>
-            <div class="cover-btn--wrapper">
-                <div class="quiz-trigger"><p>start</p></div>
-            </div>
-        </div>
-
-*/
 

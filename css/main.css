@@ -5,13 +5,6 @@
      text-rendering: optimizeLegibility;
 }
 
-/*To be removed*/
-.wire-frame-reference {
-    margin: 250px auto;
-    text-align: center;
-}
-
-
 body {
     margin: 0 auto;
     padding: 50px;
@@ -91,6 +84,7 @@ section[role="quiz-interface"] {
 }
 
 .app-container {
+    opacity: 0.96;
     margin: 0 auto;
     width: 88vw;
     max-width: 630px;
@@ -111,6 +105,7 @@ section[role="quiz-interface"] {
     min-height: 153px;
     max-height: 153px;
     font-family: "Abhaya Libre", serif;
+    
 }
 
 
@@ -144,6 +139,7 @@ section[role="quiz-interface"] {
 
 .question-img {
     position: absolute;
+    z-index: -1;
     top: 0;
     left: 0;
     height: 100%;
@@ -223,7 +219,6 @@ section[role="quiz-interface"] {
 }
 
 .choice {
-   
     margin: 22px 0px 22px 42px;
     justify-content: space-between;
     padding: 0;
@@ -231,7 +226,7 @@ section[role="quiz-interface"] {
 }
 
 
-.container {
+.answer-container {
     display: flex;
     align-items: center;
     vertical-align: middle;
@@ -239,11 +234,7 @@ section[role="quiz-interface"] {
     font-size: 14px;
     cursor: pointer;
     position: relative;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user.contain-select: none;
-    user-select: none;
-
+    border-radius: 9px;
 }
 
 /* Create a custom radio button */
@@ -267,12 +258,16 @@ section[role="quiz-interface"] {
 }
 
 /* Hide the browser's default radio button */
-.container input[type='radio'] {
-    opacity: 0;
+input[type='radio'] {
+    opacity: 0 d;
     position: absolute;
     cursor: pointer;
+    margin-left: -37px;
 }
 
+input[type=radio]:focus + label {
+    outline: rgba(77, 97, 171, 0.5) auto 3px;
+}
 
 .choice-text {
     padding: 0px 5px;
@@ -290,7 +285,7 @@ section[role="quiz-interface"] {
     display: none;
 }
 
-.container .custom-button:after {
+.answer-container .custom-button:after {
    top: 9px;
    left: 9px;
    width: 8px;
@@ -334,6 +329,7 @@ lottie-player {
         max-width: 98vw;
         width: 100vw;
         margin: 0;
+        max-height: 100vh;
     }
     .cover-container {
         margin: 12vh 0;
@@ -385,7 +381,7 @@ lottie-player {
         margin-left: -44px;
 
     }
-    .container {
+    .answer-container {
         font-size: 14.33px;
     }
     .choice {
