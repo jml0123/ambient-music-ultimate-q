@@ -322,8 +322,10 @@ lottie-player {
     }
     .app-container {
         width: 97vw;
-        height: 75.33vh;
+        height: 80vh;
         border-radius: 15px;
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
     }
 
     .app-container, .cover-container, .heading-container, .final-results-container {
@@ -331,8 +333,8 @@ lottie-player {
         width: 100vw;
         margin: 0;
         max-height: 100vh;
-        height: auto;
     }
+
     .cover-container {
         margin: 12vh 0 0 0;
     }

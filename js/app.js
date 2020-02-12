@@ -470,7 +470,7 @@ const nextQuizState = (count) => {
 const startQuiz = () => {
     $(".cover-screen").empty();
     $(".app-container").empty();
-    count = 0;
+    count = 4;
     correct = 0;
     renderQuestion(count);
 }
