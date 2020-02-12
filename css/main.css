@@ -265,8 +265,9 @@ input[type='radio'] {
     margin-left: -37px;
 }
 
-input[type=radio]:focus + label {
-    outline: rgba(77, 97, 171, 0.5) auto 3px;
+input[type=radio]:focus + label > .custom-button {
+    filter:drop-shadow(0px 0px 10.5px rgba(45, 62, 57, 0.72));
+
 }
 
 .choice-text {
@@ -312,6 +313,22 @@ lottie-player {
     background: transparent;
 }
 
+@media (pointer: fine) {
+    .choice:hover .choice-text {
+        background-color: rgba(124,  231, 0, 0.33)
+    }
+    .custom-button:hover {
+        background-color: #0969A2;
+    }
+    .custom-button:hover ~ .choice-text{
+        background-color: #0969A2
+    }  
+    .choice:hover .custom-button {
+        background-color: #0969A2;
+        filter:drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.08))
+    }
+}
+
 @media only screen and (max-width: 600px) {
     html, body {
         overflow: hidden;
@@ -322,9 +339,9 @@ lottie-player {
     }
     .app-container {
         width: 97vw;
-        height: 75.66vh;
+        height: 75.8vh;
         border-radius: 15px;
-        min-height: 75.66vh;
+        min-height: 75.8vh;
         /*min-height: -webkit-fill-available;*/
     }
 
@@ -393,18 +410,3 @@ lottie-player {
     }
 }
 
-@media (pointer: fine) {
-    .choice:hover .choice-text {
-        background-color: rgba(124,  231, 0, 0.33)
-    }
-    .custom-button:hover {
-        background-color: #0969A2;
-    }
-    .custom-button:hover ~ .choice-text{
-        background-color: #0969A2
-    }  
-    .choice:hover .custom-button {
-        background-color: #0969A2;
-        filter:drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.08))
-    }
-}

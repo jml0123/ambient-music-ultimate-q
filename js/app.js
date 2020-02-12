@@ -374,7 +374,7 @@ const addListener = () => {
         if (e.keyCode == 32) assignValues()
     })
     $('label, input[type="radio"]').mouseup(function(e) {
-        $(this).focus();
+        $(this).focus();     
         assignValues()
     });
     $('input[type="radio"]').click(function() {
@@ -396,7 +396,7 @@ const assignValues = () => {
     let label = $(choice).siblings("label")
     let answered = label.children(".choice-text").text();
     if (answered.length > 32) {    
-        answered = (`${answered.slice(0,32)}...'`)
+        answered = (`'${answered.slice(0,32)}...'`)
     }
     processAnswer(choice, label, answered)
 }
